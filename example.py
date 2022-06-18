@@ -1,11 +1,6 @@
 #%%
-import webbrowser
-import os
 import scrappeando
-import requests
-import json
 import pandas as pd
-from IPython.display import display
 
 ml=scrappeando.mercadolibreAPI()
     #Set the api
