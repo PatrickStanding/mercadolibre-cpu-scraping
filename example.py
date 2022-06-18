@@ -1,41 +1,21 @@
 #%%
+import webbrowser
+import os
 import scrappeando
 import requests
 import json
 import pandas as pd
-import importlib as imp#only for debuging
+from IPython.display import display
 
 ml=scrappeando.mercadolibreAPI()
+    #Set the api
 
-def reset():
-    imp.reload(scrappeando)
-    global ml
-    ml=scrappeando.mercadolibreAPI()
-
-ml.set_debug()
-#%%
-test=ml.test()
-categorias=ml.get_category()
-#%%
-
-categorias = pd.DataFrame(categorias)
-print(categorias)
-
-
-# url="https://api.mercadolibre.com/sites/MLA/categories"
-# response=requests.get(url)
-# print(response)
-# print(response.json())
-
-# %%
-
-## searching item
+ml.limit=3 #number of results
 
 search_cpus=ml.item_search("amd","MLA1693")
 
+
 cpus=search_cpus["results"]
-
-
 
 cpus_dataframe_data=[]
 
@@ -54,5 +34,7 @@ for item in cpus:
 
 df=pd.DataFrame(cpus_dataframe_data)
 
-print(df)
-# %%
+df["Precio"]=df["Precio"].round(2)
+df['Precio'] = df['Precio'].apply('{:,}'.format)
+
+print(df[["Titulo","Precio"]])
